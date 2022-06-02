@@ -2,12 +2,11 @@
 #include<queue>
 #include<list>
 
-
 using namespace std;
 
 list<int> soma(list<int>, list<int>);
 list<int> subtracao(list<int>, list<int>);
-list<int> vezes10(list<int>*);
+list<int> vezes10(list <int> *, list <int> *);
 
 
 
@@ -24,54 +23,31 @@ void printNumber(list<int> Number){
 int main(){
 
 
+   
     list<int> N;
     list<int> M;
-
-    /*Pede um bigNUmber ao usuário*/
-    printf("Informe quantos digitos tem o bigNumber:\n");
-    int nC; /*Armazena o tamanho do bigNUmber*/
-    scanf("%d", &nC);
-    int V[nC]; /*Cria um vetor com o tamanho informado*/
-    printf("Digite o bigNUmber:\n");
-    /*O usuário informa o bigNumber que é armazenado no vetor */
-    for(int a = 0; a < nC; a++){
-        scanf("%d", &V[a]);/*Armazena o big Number*/
-    }
-
-    /*Pede um bigNUmber ao usuário*/
-    printf("Informe quantos digitos tem o bigNumber\n");
-    int nCC; /*Armazena o tamanho do bigNUmber*/
-    scanf("%d", &nCC);
-    int v[nCC];  /*Cria um vetor com o tamanho informado*/
-    printf("Digite o bigNUmber\n");
-     /*O usuário informa o bigNumber que é armazenado no vetor */
-    for(int b = 0; b < nCC; b++){
-        scanf("%d", &v[b]);/*Armazena o big Number*/
-    }
-
-
-   // int V[] = {1,9,1,1,1,5};//vetor do exercicio
-   // int v[] = {1,5,1,4,1,6};// vetor teste
-
-  
-
-    /*Colocando os valores de V na lista N*/
-    for(size_t i = 0; i < nC; i++)
+    //int V[] = {1,2,1,2,1,4,5,2,3,8,6,4,5,8,9,5,3,1,3,5,7,9,1,5,4,1,0,9,0,8,7,6,7};
+    int V[] = {1,9,1,1,1,5};//vetor do exercicio
+    int v[] = {1,5,1,4,1,6};// vetor teste
+    for (size_t i = 0; i < 6; i++)
     {
         N.push_back(V[i]);
     }
-    
-    /*Coloando os valores do v na lista M*/
-    for (size_t i = 0; i < nCC; i++)
+    for (size_t i = 0; i < 6; i++)
     {
         M.push_back(v[i]);
     }
 
-    printf("Os dois bigNumbers digitados foram\n\n");
+    
+  
+    printf("Os dois bigNumbers do vetor sao:\n");
+    printf("1°: ");
     printNumber(N);
+    printf("2°: ");
     printNumber(M);
 
-    //SOMA
+     printf("\n");
+        //SOMA
     printf("\tSOMA\n\n");
     printf("\t  ");
     printNumber(N);
@@ -84,7 +60,7 @@ int main(){
     printNumber(C);
     
 
-    //SUBTRAÇÃO   
+        //SUBTRAÇÃO   
     printf("\n\tSubtracao\n\n");
     printf("\t  ");
     printNumber(N);
@@ -96,11 +72,25 @@ int main(){
     printf("\t  ");  
     printNumber(D);
 
+    //Vezes 10
+    printf("\n");
+    printf("\tVezes 10\n\n");
+    vezes10(&N, &M);
+    printf("\t");
+    printNumber(N);
+    printf("\t");
+    printNumber(M);
+    
+
+
 }
 
-list<int> vezes10(list<int> *N){
+list<int> vezes10(list<int> *N, list<int> *M){
+
+ 
     (*N).push_back(0);
-    return (*N);
+    (*M).push_back(0);
+    return (*N, *M);
 }
 
 list<int> soma(list<int> A, list<int> B){
@@ -138,7 +128,7 @@ list<int> subtracao(list<int> A, list<int> B){
     list<int> D;//Lista que armazena o resultado da subtração
     list<int>::iterator itA;
     list<int>::iterator itB;
-    int subtracao, x, y, aux=0;
+    int subtracao, x, y, aux = 0;
     
     itA = A.end();
     itB = B.end();
@@ -149,34 +139,60 @@ list<int> subtracao(list<int> A, list<int> B){
     while(itA != A.begin()){
         x = *itA;
         y = *itB;
-        if (y > x){
-        itA--;
-        *itA-=1;
-        itA++;
-        x += 10;
-        }
-        subtracao = x - y;
-        D.push_front(subtracao);
-        itA--;
-        itB--;
 
+        if (y > x) /*Faz a operacao de "Pegar emprestado"*/
+        {
+            itA--;
+            *itA-=1;
+            itA++;
+            x += 10;
+            subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+        }  else if(x > y){
+           /* itB--;
+            *itB-=1;
+            itB++;
+            y += 10;*/
+            subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+        
+        /*}else if(x > 0 && y == 0){ 
+            itB--;
+            *itB-=1;
+            itB++;
+            y += 10;
+            subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--; */
+                
+            /*subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--;*/
+        }else{
+           /* x = *itA;
+            y = *itB;
+            subtracao = x - y;
+            subtracao = subtracao * -1;
+            D.push_front(subtracao);
+            itA--;
+            itB--;*/
+        }
     }
     x = *itA;
     y = *itB;
-   if (B > A){
-        itA--;
-        x -= 1;
-        itA++;
-        x += 10;
+
+    if( x == 0 && y == 0){
+        return D;
+    }else{
         subtracao = x - y;
         D.push_front(subtracao);
-        itA--;
-        itB--;
-    }else{
-     subtracao = x - y;
-        D.push_front(subtracao);
-        itA--;
-        itB--;
     }
     return D;
 }
+    
