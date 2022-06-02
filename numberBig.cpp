@@ -2,7 +2,6 @@
 #include<queue>
 #include<list>
 
-
 using namespace std;
 
 list<int> soma(list<int>, list<int>);
@@ -170,34 +169,44 @@ list<int> subtracao(list<int> A, list<int> B){
         if (y > x)
         {
             itA--;
+            if(*itA != 0){
            *itA-=1;
             itA++;
             x += 10;
-            subtracao = y - x;
+            }else{
+            itA++;    
+            }
+            subtracao = x - y;
+            if (subtracao > 0){
             D.push_front(subtracao);
             itA--;
-            itB--;
+            itB--;     
+            }else{
+            subtracao = subtracao * -1; 
+            D.push_front(subtracao);  
+            itA--;
+            itB--;}
         }else if(x > y){
             itB--;
-            *itB-=1;
-             itB++;
-             y += 10;
+            if(*itB != 0){
+                *itB-=1;
+                itB++;
+                y += 10;
+            }else{
+                itB++;    
+            }
             subtracao = x - y;
+            if (itB != B.begin()){
+            if (subtracao > 0){
             D.push_front(subtracao);
             itA--;
-            itB--;
-        
-        } else if(x > 0 && y == 0){ 
-            itB--;
-            *itB-=1;
-            itB++;
-            y += 10;
-            subtracao = x - y;
-            D.push_front(subtracao);
+            itB--;     
+            }else{
+            subtracao = subtracao * -1; 
+            D.push_front(subtracao);  
             itA--;
-            itB--;
-                
-           
+            itB--;}  
+            }
         }else{
             x = *itA;
             y = *itB;
@@ -220,4 +229,3 @@ list<int> subtracao(list<int> A, list<int> B){
 
     return D;
 }
-    
