@@ -7,7 +7,7 @@ using namespace std;
 
 list<int> soma(list<int>, list<int>);
 list<int> subtracao(list<int>, list<int>);
-list<int> vezes10(list<int>*);
+list<int> vezes10(list <int> *, list <int> *);
 
 
 
@@ -27,51 +27,55 @@ int main(){
     list<int> N;
     list<int> M;
 
-    /*Pede um bigNUmber ao usuário*/
-    printf("Informe quantos digitos tem o bigNumber:\n");
-    int nC; /*Armazena o tamanho do bigNUmber*/
-    scanf("%d", &nC);
-    int V[nC]; /*Cria um vetor com o tamanho informado*/
-    printf("Digite o bigNUmber:\n");
-    /*O usuário informa o bigNumber que é armazenado no vetor */
-    for(int a = 0; a < nC; a++){
-        scanf("%d", &V[a]);/*Armazena o big Number*/
+    int qtd1 = 0; /*Armazena o tamanho do 1 ° bigNumber*/
+    int qtd2 = 0; /*Armazena o tamanho do 2° bigNumber*/
+    
+    /*Pedindo que o usuario informe o tamanho do bigNumber*/
+    printf("Digite A quantidade de digitos do BigNumber:\n");
+    scanf("%d", &qtd1);
+
+    /*Pedindo que o usuario informe o big number*/
+    int big_Number1;/*Armazena os valores inseridos pelo user*/
+    printf("Informe um big number:\n");
+    for(int i = 0; i < qtd1; i++){
+       scanf("%d", &big_Number1);
+       N.push_back(big_Number1); /*Armazenando os valores que o usuário digita na Lista N*/
     }
 
-    /*Pede um bigNUmber ao usuário*/
-    printf("Informe quantos digitos tem o bigNumber\n");
-    int nCC; /*Armazena o tamanho do bigNUmber*/
-    scanf("%d", &nCC);
-    int v[nCC];  /*Cria um vetor com o tamanho informado*/
-    printf("Digite o bigNUmber\n");
-     /*O usuário informa o bigNumber que é armazenado no vetor */
-    for(int b = 0; b < nCC; b++){
-        scanf("%d", &v[b]);/*Armazena o big Number*/
+    /*Pedindo que o usuario informe o tamanho do bigNumber*/
+    printf("Digite A quantidade de digitos de outro BigNumber:\n");
+    scanf("%d", &qtd2);
+    /*Pedindo que o usuario informe o big number*/
+    int big_Number2;/*Armazena os valores inseridos pelo user*/
+    printf("Informe um big number:\n");
+    for(int i = 0; i < qtd2; i++){
+        scanf("%d", &big_Number2);
+        M.push_back(big_Number2);/*Armazenando os valores que o usuário digita na Lista M*/
     }
 
-
-   // int V[] = {1,9,1,1,1,5};//vetor do exercicio
-   // int v[] = {1,5,1,4,1,6};// vetor teste
+    /*Completa o tamho da lista caso elas sejam diferentes*/
+    int aux;
+    if(qtd1 > qtd2){
+        aux = qtd1 - qtd2;
+        for(int i = 0; i < aux; i++){
+            M.push_front(0);
+        }
+    }else{
+        aux = qtd2 - qtd1;
+        for(int i = 0; i < aux; i++){
+            N.push_front(0);
+        }
+    }
 
   
-
-    /*Colocando os valores de V na lista N*/
-    for(size_t i = 0; i < nC; i++)
-    {
-        N.push_back(V[i]);
-    }
-    
-    /*Coloando os valores do v na lista M*/
-    for (size_t i = 0; i < nCC; i++)
-    {
-        M.push_back(v[i]);
-    }
-
-    printf("Os dois bigNumbers digitados foram\n\n");
+    printf("Os dois bigNumbers digitados foram\n");
+    printf("1°: ");
     printNumber(N);
+    printf("2°: ");
     printNumber(M);
 
-    //SOMA
+     printf("\n");
+        //SOMA
     printf("\tSOMA\n\n");
     printf("\t  ");
     printNumber(N);
@@ -84,7 +88,7 @@ int main(){
     printNumber(C);
     
 
-    //SUBTRAÇÃO   
+        //SUBTRAÇÃO   
     printf("\n\tSubtracao\n\n");
     printf("\t  ");
     printNumber(N);
@@ -96,11 +100,24 @@ int main(){
     printf("\t  ");  
     printNumber(D);
 
+    //Vezes 10
+    printf("\tVezes 10\n");
+    vezes10(&N, &M);
+    printf("\t");
+    printNumber(N);
+    printf("\t");
+    printNumber(M);
+    
+
+
 }
 
-list<int> vezes10(list<int> *N){
+list<int> vezes10(list<int> *N, list<int> *M){
+
+ 
     (*N).push_back(0);
-    return (*N);
+    (*M).push_back(0);
+    return (*N, *M);
 }
 
 list<int> soma(list<int> A, list<int> B){
@@ -138,7 +155,7 @@ list<int> subtracao(list<int> A, list<int> B){
     list<int> D;//Lista que armazena o resultado da subtração
     list<int>::iterator itA;
     list<int>::iterator itB;
-    int subtracao, x, y, aux=0;
+    int subtracao, x, y, aux = 0;
     
     itA = A.end();
     itB = B.end();
@@ -149,34 +166,58 @@ list<int> subtracao(list<int> A, list<int> B){
     while(itA != A.begin()){
         x = *itA;
         y = *itB;
-        if (y > x){
-        itA--;
-        *itA-=1;
-        itA++;
-        x += 10;
-        }
-        subtracao = x - y;
-        D.push_front(subtracao);
-        itA--;
-        itB--;
 
+        if (y > x)
+        {
+            itA--;
+           *itA-=1;
+            itA++;
+            x += 10;
+            subtracao = y - x;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+        }else if(x > y){
+            itB--;
+            *itB-=1;
+             itB++;
+             y += 10;
+            subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+        
+        } else if(x > 0 && y == 0){ 
+            itB--;
+            *itB-=1;
+            itB++;
+            y += 10;
+            subtracao = x - y;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+                
+           
+        }else{
+            x = *itA;
+            y = *itB;
+            subtracao = x - y;
+            subtracao = subtracao;
+            D.push_front(subtracao);
+            itA--;
+            itB--;
+        }
     }
     x = *itA;
     y = *itB;
-   if (B > A){
-        itA--;
-        x -= 1;
-        itA++;
-        x += 10;
+
+    if( x == 0 && y == 0){
+        return D;
+    } else{
         subtracao = x - y;
         D.push_front(subtracao);
-        itA--;
-        itB--;
-    }else{
-     subtracao = x - y;
-        D.push_front(subtracao);
-        itA--;
-        itB--;
     }
+
     return D;
 }
+    
