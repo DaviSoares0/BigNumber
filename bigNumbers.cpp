@@ -22,13 +22,13 @@ void printNumber(list<int> Number){
 
 int main(){
 
-
-   
     list<int> N;
     list<int> M;
-    //int V[] = {1,2,1,2,1,4,5,2,3,8,6,4,5,8,9,5,3,1,3,5,7,9,1,5,4,1,0,9,0,8,7,6,7};
     int V[] = {1,9,1,1,1,5};//vetor do exercicio
     int v[] = {1,5,1,4,1,6};// vetor teste
+
+
+    /*Amazena os vetores nas listas N e M respectivamente*/
     for (size_t i = 0; i < 6; i++)
     {
         N.push_back(V[i]);
@@ -151,37 +151,10 @@ list<int> subtracao(list<int> A, list<int> B){
             itA--;
             itB--;
         }  else if(x > y){
-           /* itB--;
-            *itB-=1;
-            itB++;
-            y += 10;*/
             subtracao = x - y;
             D.push_front(subtracao);
             itA--;
             itB--;
-        
-        /*}else if(x > 0 && y == 0){ 
-            itB--;
-            *itB-=1;
-            itB++;
-            y += 10;
-            subtracao = x - y;
-            D.push_front(subtracao);
-            itA--;
-            itB--; */
-                
-            /*subtracao = x - y;
-            D.push_front(subtracao);
-            itA--;
-            itB--;*/
-        }else{
-           /* x = *itA;
-            y = *itB;
-            subtracao = x - y;
-            subtracao = subtracao * -1;
-            D.push_front(subtracao);
-            itA--;
-            itB--;*/
         }
     }
     x = *itA;
